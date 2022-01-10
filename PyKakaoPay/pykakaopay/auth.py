@@ -2,10 +2,6 @@ import requests
 import json
 from pykakaopay.error import ArgumentError, InternalServerError
 
-single_cid = "TC0ONETIME"
-recurring_cid = "TCSUBSCRIP"
-app_admin_key = "46b46375c1ca60bdef7e97720a32c543"
-
 
 class Auth:
     def __init__(
@@ -21,20 +17,20 @@ class Auth:
         self.tid = None
         self.created_at = None
 
-    def _res_check(res):
-        ans = json.load(res.text)
+    def _res_check(self, res):
+        ans = res.text
         if res.status_code != 200:
             if res.status_code == 400:
-                raise ArgumentError(ans["errMsg"])
+                raise ArgumentError(ans)
             if res.status_code == 401:
-                raise ArgumentError(ans["errMsg"])
+                raise ArgumentError(ans)
             if res.status_code == 500:
                 raise InternalServerError()
 
     def ready(self, approval_url, cancel_url, fail_url, device: str = "web"):
         url = "https://kapi.kakao.com/v1/payment/ready"
         headers = {
-            "Authorization": "KakaoAK " + app_admin_key,
+            "Authorization": "KakaoAK " + self.app_admin_key,
             "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
         }
         params = {

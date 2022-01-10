@@ -1,7 +1,7 @@
 import requests
 import json
 from pykakaopay.error import ArgumentError, InternalServerError
-from auth import Auth
+from pykakaopay.auth import Auth
 
 
 class SinglePayment(Auth):
