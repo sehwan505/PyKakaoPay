@@ -14,6 +14,4 @@ class InternalServerError(KakaoPayException):
     """Exception For Internal Server Error"""
 
     def __init__(self, *args: object) -> None:
-        super().__init__(
-            "Server Error, Please report error to Developer Forum(https://developers.naver.com/forum)"
-        )
+        super().__init__("Server Error, Please report error to Developer Forum")

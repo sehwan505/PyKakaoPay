@@ -11,11 +11,18 @@ def test_version():
 
 
 def test_single_payment():
-    pay = SinglePayment(app_admin_key, single_cid, "1", "1")
+    pay = SinglePayment(app_admin_key, single_cid)
     res = pay.ready(
-            "http://127.0.0.1:8000/success/",
-            "http://127.0.0.1:8000/cancel/",
-            "http://127.0.0.1:8000/fail/",
-            "web",
-        )
+        0,
+        0,
+        f"http://127.0.0.1:8000/success/",
+        f"http://127.0.0.1:8000/cancel/",
+        f"http://127.0.0.1:8000/fail/",
+        "수박",
+        1,
+        10000,
+        0,
+        800,
+        "web",
+    )
     assert res == "ABC"
