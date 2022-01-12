@@ -3,15 +3,12 @@ from fastapi import Depends, FastAPI
 from pydantic import BaseModel
 from fastapi.security import APIKeyCookie
 from starlette.responses import Response
-from datetime import timedelta
-from pykakaopay.single_payment import SinglePayment
 from pykakaopay.recurring_payment import RecurringPayment
-from pykakaopay.error import ArgumentError, InternalServerError
 
 app = FastAPI()
 
-recurring_cid = "TCSUBSCRIP"
-app_admin_key = "7772a592a85bd67d6dd6b1a4634e6231"
+recurring_cid = "TCSUBSCRIP"  # example cid served by kakao
+app_admin_key = "app_admin_key_of_yours"
 
 reccur_pay = RecurringPayment(app_admin_key, recurring_cid)
 
@@ -27,15 +24,15 @@ async def root(response: Response):
         res = reccur_pay.ready(
             partner_order_id,
             partner_user_id,
-            f"http://127.0.0.1:8000/success/{partner_order_id}/{partner_user_id}",
-            f"http://127.0.0.1:8000/cancel/{partner_order_id}/{partner_user_id}",
-            f"http://127.0.0.1:8000/fail/{partner_order_id}/{partner_user_id}",
-            "수박",
+            f"http://127.0.0.1:8000/success/{partner_order_id}/{partner_user_id}",  # approval_url
+            f"http://127.0.0.1:8000/cancel/{partner_order_id}/{partner_user_id}",  # cancel_url
+            f"http://127.0.0.1:8000/fail/{partner_order_id}/{partner_user_id}",  # fail_url
+            "수박",  # item_name
             1,  # quantity
             10000,  # total_amount
             0,  # tax_free_amount
             800,  # vat_amount
-            "web",
+            "web",  # device
         )
         response.set_cookie("session", res["tid"])  # save tid in cookie
         return {"message": res}
@@ -95,11 +92,11 @@ async def subscribtion(
     try:
         return reccur_pay.subscription(
             sid,
-            0,
-            0,
-            1,
-            10000,
-            0,
+            0,  # partner_order_id
+            0,  # partner_user_id
+            1,  # quantity
+            10000,  # total_amount
+            0,  # tax_free_amount
         )
     except Exception as e:
         return e
