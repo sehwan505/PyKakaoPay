@@ -1,6 +1,4 @@
 import requests
-import json
-from pykakaopay.error import ArgumentError, InternalServerError
 from pykakaopay.auth import Auth
 
 
