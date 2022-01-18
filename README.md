@@ -1,8 +1,6 @@
 PyKakaoPay
 =======
 
-[![Build Status]()]()
-
 KakaoPay (https://developers.kakao.com/docs/latest/ko/kakaopay/common) wrapper in Python.
 
 Installing
